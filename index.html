@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Probing the Behaviors of Logical Fallacy Detection Models</title>
+    <link rel="icon" type="image/x-icon" href="static/images/llm_icon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="static/css/bulma.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="static/css/index.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script src="static/js/index.js"></script>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                Probing the Behaviors of Logical Fallacy Detection Models
+              </h1>
+              <div class="is-size-5 publication-authors">
+                <!-- Paper authors -->
+                <span class="author-block">
+                  <a href=mailto:"ctotla@umass.edu">Chirag Totla</span
+                >
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"
+                  >University of Massachusetts, Amherst<br
+                /></span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- Arxiv PDF link -->
+                  <span class="link-block">
+                    <a
+                      href="https://drive.google.com/file/d/1bM4hbo1502q7xIvmekeeSGKuLsC-HzCN/view?usp=sharing"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Report</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Paper abstract -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                The proposed research aims to develop a robust system for
+                detecting logical fallacies in social media comments and online
+                news platforms using advanced Natural Language Processing (NLP)
+                techniques. The project will test, analyze, and optimize various
+                NLP models to achieve the highest accuracy in predicting the
+                correct type of logical fallacy in a given text, while
+                addressing the challenges posed by subtle fallacies, real-world
+                ambiguity, and platform-specific language. By benchmarking each
+                model's capability, identifying areas of excellence, and
+                exploring the impact of contextual changes, the research will
+                contribute to the development of more intelligent systems for
+                analyzing and interpreting text. The ultimate goal is to improve
+                the quality of online discussions, empower users to identify and
+                avoid fallacious arguments, and promote more logical and
+                evidence-based reasoning in public discourse.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End paper abstract -->
+
+    <!-- Problem Statement-->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Problem Statement</h2>
+            <div class="content has-text-justified">
+              <p>
+                Existing logical fallacies detection papers focused on improving
+                the performance of automatic metrics, such as Accuracy or
+                \(F_1\) score. However, different types of fallacies require
+                different information for identification (e.g., some depend on
+                context, and some depend on structure or common sense
+                reasoning). Such automatic metrics cannot effectively measure if
+                a model detects logical fallacies with reasonable features.<br />
+                Let an input instance of logical fallacies detection datasets be
+                \(X\), where \(X=\{x_1, x_2,\dots,x_n\}\). We designed several
+                functions \(\phi_1,\phi_2, \dots,\phi_n\) to modify the input
+                instance \(X\), i.e., \(\phi_i(X)=X^{(i)}\), which we called
+                <i>attacks</i>. Each function \(\phi_i\) will associate with
+                certain information, such as context, sentence structure, or
+                common sense. In this study, we focus on testing \(f_\theta\), a
+                model trained with unmodified data \(X\), on the modified data
+                \(X^{(1)}, X^{(2)},\dots, X^{(n)}\). Let \(\hat{Y}=f_\theta(X)\)
+                and \(\hat{Y}^{(i)}=f_\theta(X^{(i)})\). We analyze the
+                difference between \(\hat{Y}\) and \(\hat{Y}^{(i)}\),
+                <i>i.e</i>, \(\hat{Y}^{(i)} - \hat{Y}\), to know what
+                information different models use to detect logical fallacies.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--Analysis of Various Models-->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Analysis of Various Models</h2>
+            <div class="content has-text-justified">
+              The analysis of various models for logical fallacy detection
+              reveals insights into their behaviors and sensitivities to
+              different types of attacks:
+              <ul>
+                <li>
+                  <em>Gemma (few) and Gemma (COT)</em> are found to be
+                  insensitive to changes in input text, even when the changes
+                  affect the logic. The insensitivity in Gemma (few) is not due
+                  to imbalanced examples in the prompt, but rather the model's
+                  inability to identify logical fallacies. Gemma (COT) tends to
+                  make decisions based on partial input and is more assertive
+                  than GPT-4 when the input lacks detail.
+                </li>
+                <li>
+                  <em>GPT-4</em> aligns with the hypothesis of having a
+                  significant decrease in performance when the \(\phi_{Append}\)
+                  attack is applied. However, its performance also decreases
+                  with the \(\phi_{Delete}\) attack, suggesting that it relies
+                  on semantic features to identify logical fallacies. GPT-4
+                  (zero) outperforms GPT-4 (few) and GPT-4 (COT), possibly due
+                  to issues with demonstrations and instructions in the prompts.
+                </li>
+                <li>
+                  <em>Llama3</em> is less sensitive to all attacks compared to
+                  GPT-4. It is more capable of filling in missing words in the
+                  \(\phi_{Delete}\) setting and is more assertive in the
+                  \(\phi_{Replace}\) attack. Llama3 also shows a better ability
+                  to reason across different contents, using parent comments and
+                  titles to aid decision-making.
+                </li>
+                <li>
+                  Finetuned models (BERT and NLI) are less sensitive to context
+                  changes than semantic changes. The Reddit dataset used for
+                  training is not diverse enough, causing models to falsely
+                  learn to identify logical fallacies with semantic information.
+                  NLI is more sensitive to all attacks than BERT, possibly due
+                  to the loss function used during training.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image carousel -->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img
+                  src="static/images/data_stats.png"
+                  alt="Statistics of the datasets used"
+                  class="img-center"
+                />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                Statistics of the datasets used
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img
+                  src="static/images/result_withoutattack.png"
+                  class="img-center-2"
+                />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                The result of fallacy detection task without applying attack
+                functions. We trained models on the Reddit dataset, and tested
+                them on LOGIC, LOGICCLIMATE, and Reddit. For LOGIC and
+                LOGICCLIMATE, we reported the Recall rate as they only have
+                positive samples. While for others, we reported Precision,
+                Recall, and F1 score. The highest (second-highest) scores are
+                set in <b>bold</b> (<u>underlined</u>).
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img
+                  src="static/images/results_attack.png"
+                  class="img-center-2"
+                />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                The result of fallacy detection task with the appending
+                supporting context attack. We reported the difference between
+                the attacked performance and the original performance.
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img
+                  src="static/images/result_attack_2.png"
+                  class="img-center-2"
+                />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                The result of fallacy detection task with the paraphrasing
+                attack
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img
+                  src="static/images/result_attack_3.png"
+                  class="img-center-2"
+                />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                The result of fallacy detection task with the randomly deleting
+                words attack
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End image carousel -->
+
+    <!--Conclusion of Study-->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Conclusion of Study</h2>
+            <div class="content has-text-justified">
+              <p>
+                In this study, a novel approach was proposed to test the
+                behaviors of logical fallacy detection models by comparing their
+                performance across data subjected to different processes,
+                instead of collecting a new benchmark dataset. Four attacks were
+                designed to examine various aspects of the models' behaviors,
+                including appending supporting context, paraphrasing, randomly
+                removing words, and replacing named entities. The experimental
+                results revealed that all tested logical fallacy detection
+                models, including two fine-tuned models and three LLMs, were
+                unable to identify logical fallacies solely based on logical
+                reasoning, even when the Chain-of-Thought prompt was applied.
+              </p>
+              <p>
+                The effectiveness of the proposed attack method was discussed,
+                highlighting its limitations and potential as a rapid test to
+                uncover issues in model behaviors for detecting logical
+                fallacies. However, the authors acknowledged that relying solely
+                on quantitative results was insufficient, and in-depth
+                qualitative analysis was necessary to understand the reasons
+                behind the models' behavioral differences. The study also found
+                that few-shot and COT prompts, despite achieving higher
+                performance with non-attack data than zero-shot prompts, were
+                more likely to fail when attacks were applied, possibly due to
+                the choice of demonstrations.
+              </p>
+              <p>
+                The findings of this research raise concerns regarding the
+                robustness and reliability of current logical fallacy detection
+                approaches and underscore the need for further studies to
+                improve these methods. The proposed attack framework serves as a
+                valuable tool for rapidly identifying potential issues in model
+                behaviors and guiding future in-depth analyses to enhance the
+                performance and reliability of logical fallacy detection models.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Experimental Results</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image carousel -->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img
+                  src="static/images/gpt4vgemma.png"
+                  alt="Statistics of the datasets used"
+                />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                Outputs generated by GPT-4 (COT) and Gemma (COT), respectively.
+                The inputs are randomly sampled from the LOGICCLIMATE data
+                processed with \(\phi_{Append}\)
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img src="static/images/gpt-zero.png" />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                GPT-4 (zero) output while inputting original data and data with
+                randomly deleting words. The inputs are randomly sampled from
+                the LOGIC. The deleted words are marked with brackets.
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
+              <center>
+                <img src="static/images/gpt-v-llama.png" />
+              </center>
+              <h2 class="subtitle has-text-centered">
+                Outputs generated by GPT-4 (zero) and Llama3 (zero),
+                respectively. The inputs are randomly sampled from the Reddit
+                data processed with \(\phi_{Append}\)
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End image carousel -->
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the
+                <a
+                  href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank"
+                  >Academic Project Page Template</a
+                >
+                which was adopted from the <a
+                  href="https://nerfies.github.io"
+                  target="_blank"
+                  >Nerfies</a
+                >.<br />
+                This website is licensed under a
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  target="_blank"
+                  >Creative Commons Attribution-ShareAlike 4.0 International
+                  License</a
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+</html>
