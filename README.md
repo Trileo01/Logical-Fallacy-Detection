@@ -1,48 +1,70 @@
-# Academic Project Page Template
-This is an academic paper project page template.
+## Attack
+
+The `attack` folder contains four scripts of attack we proposed. You can run it with 
+
+```
+python [attack_name].py [dataset]
+```
+
+The value of `[dataset]` could be one of the following: logic, logicClimate, or reddit.
+
+## BERT Baseline
+
+We used the BERT based logical fallacy detection model implemented by [Saumya et al. (2021)](https://github.com/sahaisaumya/informal_fallacies/tree/main)
+
+The `BERT` folder contains scripts that we used to process data to match the format of the Reddit dataset, so that we can test the BERT model on other datasets. `proc_logic.py` and `proc_logicClimate.py` are used to process the Logic and LogicClimate datasets, respectively. `proc_attack.py` is used to process attacked data for all three datasets. It should be run with 
+
+```
+python proc_attack.py [attack]
+```
+
+The value of `[attack]` could be one of the following: append, delete, paraphrase, or replace. Noted that the Reddit dataset is included in the above git repo.
+
+## NLI
+
+We used the NLI logical fallacy detection model implemented by [Lalwani et al. (2022)](https://github.com/causalNLP/logical-fallacy/tree/main)
+
+The `NLI` folder contains scripts that we used to process data to match the format of the NLI model's input, and the scripts for evaluating the NLI model as well. `proc_logic.py`, `proc_logicClimate.py`, `proc_reddit.py` are used to process the respective three datasets, and `proc_attack.py` is used to process attacked data for all of them. Similar to the code in the `BERT` folder, `proc_attack.py` should be run with
+
+```
+python proc_attack.py [attack]
+```
 
 
-Example project pages built using this template are:
-- https://vision.huji.ac.il/spectral_detuning/
-- https://vision.huji.ac.il/podd/
-- https://dreamix-video-editing.github.io
-- https://vision.huji.ac.il/conffusion/
-- https://vision.huji.ac.il/3d_ads/
-- https://vision.huji.ac.il/ssrl_ad/
-- https://vision.huji.ac.il/deepsim/
+The value of `[attack]` could be one of the following: append, delete, paraphrase, or replace.
 
+The `eval.py` is used to evaluate result of the NLI model. It should be run with
 
+```
+python eval.py [dataset] [attack]
+```
 
-## Start using the template
-To start using the template click on `Use this Template`.
+The value of `[dataset]` could be one of the following: logic, logicClimate, or reddit. The value of `[attack]` could be one of the following: 0, append, delete, paraphrase, or replace, where 0 means the result without attack.
 
-The template uses html for controlling the content and css for controlling the style. 
-To edit the websites contents edit the `index.html` file. It contains different HTML "building blocks", use whichever ones you need and comment out the rest.  
+## LLM
 
-**IMPORTANT!** Make sure to replace the `favicon.ico` under `static/images/` with one of your own, otherwise your favicon is going to be a dreambooth image of me.
+The `LLM` folder contains scripts that we used to call the API of GPT-4 other open-weight LLMs for logical fallacy detection. Our designed zero-shot, few-shot, and Chain-of-Thought prompts were implemented in different files. The scripts for GPT-4 and open-weight LLMs were put in different files as well.
 
-## Components
-- Teaser video
-- Images Carousel
-- Youtube embedding
-- Video Carousel
-- PDF Poster
-- Bibtex citation
+### GPT-4
 
-## Tips:
-- The `index.html` file contains comments instructing you what to replace, you should follow these comments.
-- The `meta` tags in the `index.html` file are used to provide metadata about your paper 
-(e.g. helping search engine index the website, showing a preview image when sharing the website, etc.)
-- The resolution of images and videos can usually be around 1920-2048, there rarely a need for better resolution that take longer to load. 
-- All the images and videos you use should be compressed to allow for fast loading of the website (and thus better indexing by search engines). For images, you can use [TinyPNG](https://tinypng.com), for videos you can need to find the tradeoff between size and quality.
-- When using large video files (larger than 10MB), it's better to use youtube for hosting the video as serving the video from the website can take time.
-- Using a tracker can help you analyze the traffic and see where users came from. [statcounter](https://statcounter.com) is a free, easy to use tracker that takes under 5 minutes to set up. 
-- This project page can also be made into a github pages website.
-- Replace the favicon to one of your choosing (the default one is of the Hebrew University). 
-- Suggestions, improvements and comments are welcome, simply open an issue or contact me. You can find my contact information at [https://pages.cs.huji.ac.il/eliahu-horwitz/](https://pages.cs.huji.ac.il/eliahu-horwitz/)
+You can call GPT-4 API with
 
-## Acknowledgments
-Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
+```
+zeroshot_detect_gpt.py [dataset] [attack]
+fewshot_detect_gpt.py [dataset] [attack]
+cot_detect_gpt.py [dataset] [attack]
+```
 
-## Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+The value of `[dataset]` could be one of the following: logic, logicClimate, or reddit. The value of `[attack]` could be one of the following: 0, append, delete, paraphrase, or replace, where 0 means the result without attack.
+
+### Open-weight LLMs
+
+We run other LLMs with Ollama on Unity. You can call those models' API with
+
+```
+zeroshot_detect_openllm.py [dataset] [attack] [model]
+fewshot_detect_openllm.py [dataset] [attack] [model]
+cot_detect_openllm.py [dataset] [attack] [model]
+```
+
+The value of `[dataset]` could be one of the following: logic, logicClimate, or reddit. The value of `[attack]` could be one of the following: 0, append, delete, paraphrase, or replace, where 0 means the result without attack. The value of `[model]` could be any model name listed on Ollama website, e.g., Llama3.
